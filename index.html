@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mon Dashboard IA</title>
+
+    <!-- Bibliothèques Externes (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- VOTRE CSS LOCAL -->
+    <link rel="stylesheet" href="./ressources/style/main.css" />
+  </head>
+  <body class="text-slate-800 font-sans antialiased">
+    <div id="app" class="container mx-auto px-4 py-10 max-w-6xl">
+      <header class="text-center mb-12">
+        <h1 class="text-4xl font-extrabold text-slate-900 mb-2 tracking-tight">
+          IA Dashboard
+        </h1>
+        <p class="text-slate-500 font-medium text-sm">Mes outils favoris</p>
+      </header>
+
+      <!-- Grille des Entreprises (Hauteur réduite) -->
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <div
+          v-for="company in companies"
+          :key="company.name"
+          @click="selectedCompany = company"
+          class="bg-white p-4 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer border border-slate-100 flex items-center justify-center h-32 group relative"
+        >
+          <!-- Tooltip -->
+          <div
+            class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-20"
+          >
+            {{ company.name }}
+            <div
+              class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-slate-800"
+            ></div>
+          </div>
+
+          <div
+            class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-10 rounded-xl transition-opacity duration-300"
+            :class="company.bgGradient || 'from-gray-100 to-gray-200'"
+          ></div>
+
+          <div class="z-10 flex items-center justify-center w-full h-full">
+            <img
+              v-if="company.logoType === 'img'"
+              :src="company.logo"
+              class="h-16 w-auto max-w-[90%] object-contain transition-transform duration-300 group-hover:scale-110"
+              :style="{ transform: 'scale(' + (company.scale || 1) + ')' }"
+              :alt="company.name"
+            />
+
+            <!-- Si c'est une icone (FontAwesome) -->
+            <div
+              v-else
+              class="flex items-center gap-3 transition-transform duration-300 group-hover:scale-110"
+            >
+              <!-- L'icône -->
+              <i
+                :class="[company.logo, company.color, company.size || 'text-6xl']"
+              ></i>
+
+              <!-- Le texte (s'affiche seulement si demandé dans data.js) -->
+              <span
+                v-if="company.showName"
+                class="font-bold text-lg text-slate-800"
+              >
+                {{ company.name }}
+              </span>
+            </div>
+
+            <span
+              v-if="company.badge"
+              class="absolute top-2 right-2 px-1.5 py-0.5 bg-indigo-100 text-indigo-700 text-[9px] font-bold uppercase rounded-md"
+              >{{ company.badge }}</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- MODALE -->
+      <div
+        v-if="selectedCompany"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+        @click.self="selectedCompany = null"
+      >
+        <div
+          class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[85vh] flex flex-col animate-fade-in overflow-hidden"
+        >
+          <div
+            class="p-5 border-b bg-slate-50 flex justify-between items-center sticky top-0 z-10"
+          >
+            <div class="flex items-center gap-3">
+              <img
+                v-if="selectedCompany.logoType === 'img'"
+                :src="selectedCompany.logobis"
+                class="h-8 w-8 object-contain"
+              />
+              <i
+                v-else
+                :class="[selectedCompany.logo, selectedCompany.color, 'text-2xl']"
+              ></i>
+              <div>
+                <h2 class="text-xl font-bold text-slate-900 leading-tight">
+                  {{ selectedCompany.name }}
+                </h2>
+                <p class="text-xs text-slate-500">{{ selectedCompany.desc }}</p>
+              </div>
+            </div>
+            <button
+              @click="selectedCompany = null"
+              class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-200 text-slate-500 transition"
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <div class="p-5 overflow-y-auto bg-white">
+            <div class="grid grid-cols-1 gap-3">
+              <a
+                v-for="tool in selectedCompany.tools"
+                :key="tool.name"
+                :href="tool.url"
+                target="_blank"
+                class="group block p-3 rounded-lg border border-slate-200 hover:border-blue-500 hover:shadow-md transition-all bg-slate-50/50 hover:bg-white"
+              >
+                <div class="flex justify-between items-center mb-1">
+                  <h3
+                    class="font-bold text-base text-slate-800 group-hover:text-blue-600"
+                  >
+                    {{ tool.name }}
+                  </h3>
+                  <div class="flex gap-2">
+                    <span
+                      v-for="tag in tool.tags"
+                      :key="tag"
+                      class="px-1.5 py-0.5 text-[9px] font-semibold rounded bg-white border border-slate-200 text-slate-500"
+                      >{{ tag }}</span
+                    >
+                  </div>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  {{ tool.desc }}
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. Charger d'abord vos données -->
+    <script src="./ressources/js/data.js"></script>
+
+    <!-- 2. Ensuite lancer l'application -->
+    <script>
+      const { createApp, ref } = Vue;
+
+      createApp({
+        setup() {
+          const selectedCompany = ref(null);
+          // On récupère la variable définie dans data.js
+          const companies = ref(companiesData);
+
+          return {
+            companies,
+            selectedCompany,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
