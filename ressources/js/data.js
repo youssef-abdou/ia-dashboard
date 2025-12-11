@@ -4,8 +4,8 @@ const companiesData = [
   {
     name: "Google",
     logoType: "img",
-    logo: "./ressources/images/Google-Logo.wine.svg",
-    logobis: "./ressources/images/Google-Logo.wine.svg",
+    logo: "./ressources/images/google.svg",
+    logobis: "./ressources/images/google.svg",
     scale: 1,
     desc: "Leader de l'IA multimodale et de la recherche.",
     bgGradient: "from-blue-50 to-red-50",
@@ -80,7 +80,7 @@ const companiesData = [
   {
     name: "Anthropic",
     logoType: "img",
-    logo: "./ressources/images/Anthropic_logo.svg",
+    logo: "./ressources/images/anthropic.svg",
     logobis: "./ressources/images/claude.svg",
     scale: 0.8,
     desc: "Sécurité et capacités littéraires.",
@@ -109,8 +109,8 @@ const companiesData = [
   {
     name: "Mistral AI",
     logoType: "img",
-    logo: "./ressources/images/mistral-logo-color-black.svg",
-    logobis: "./ressources/images/mistral-logo-color-black.svg",
+    logo: "./ressources/images/mistral.svg",
+    logobis: "./ressources/images/mistral.svg",
     scale: 0.9,
     desc: "Le champion Français et Européen.",
     bgGradient: "from-yellow-50 to-orange-50",
@@ -161,8 +161,8 @@ const companiesData = [
   {
     name: "Perplexity",
     logoType: "img",
-    logo: "./ressources/images/Perplexity.svg",
-    logobis: "./ressources/images/Perplexity.svg",
+    logo: "./ressources/images/perplexity.svg",
+    logobis: "./ressources/images/perplexity.svg",
     scale: 1.3,
     desc: "Moteur de réponse (recherche + synthèse).",
     bgGradient: "from-teal-50 to-cyan-50",
