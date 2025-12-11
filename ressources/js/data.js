@@ -201,12 +201,6 @@ const companiesData = [
         desc: "Série de modèles open-source très puissants.",
         tags: ["Open Source"],
       },
-      {
-        name: "Yi (01.AI)",
-        url: "https://guan.01.ai",
-        desc: "Excellent modèle bilingue Anglais/Chinois.",
-        tags: ["LLM"],
-      },
     ],
   },
   {
@@ -229,12 +223,6 @@ const companiesData = [
         url: "https://hailuo.ai",
         desc: "Génération de vidéo impressionnante (concurrent de Sora).",
         tags: ["Vidéo"],
-      },
-      {
-        name: "Talkie",
-        url: "#",
-        desc: "Personnages IA conversationnels.",
-        tags: ["Chatbot"],
       },
     ],
   },
